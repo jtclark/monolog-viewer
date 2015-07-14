@@ -56,12 +56,14 @@ class MonologViewer {
         $twig->addFilter(new \Twig_SimpleFilter('alertIconClass', function ($string) {
             switch ($string) {
                 case 'ERROR':
+                case 'CRITICAL':
                     return 'fa-exclamation-circle';
                     break;
                 case 'WARNING':
                     return 'fa-exclamation-triangle';
                     break;
                 case 'INFO':
+                case 'DEBUG':
                     return 'fa-info-circle';
                     break;
             }
@@ -71,12 +73,14 @@ class MonologViewer {
         $twig->addFilter(new \Twig_SimpleFilter('alertClass', function ($string) {
             switch ($string) {
                 case 'ERROR':
+                case 'CRITICAL':
                     return 'alert-danger';
                     break;
                 case 'WARNING':
                     return 'alert-warning';
                     break;
                 case 'INFO':
+                case 'DEBUG':
                     return 'alert-info';
                     break;
             }
