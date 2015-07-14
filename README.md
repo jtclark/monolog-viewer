@@ -18,6 +18,7 @@ $viewer->render();
 ```
 
 ## monolog config
+How we initialized Monolog to write our log files. 
 ```
 $logger = new \Monolog\Logger('app');
 
