@@ -1,7 +1,7 @@
 # monolog-viewer
 Very simple interface for viewing monolog JSON formatted log files
 
-# Basic Usage
+## Basic Usage
 ```
 <?php
 require (__DIR__ . '/vendor/autoload.php');
@@ -12,6 +12,7 @@ $viewer = new \Jtclark\MonologViewer([
     'template' => 'optional_log_template.twig'
 ]);
 
+// commenting out this line will disable authentication
 $viewer->authenticate();
 
 $viewer->render();
@@ -20,6 +21,7 @@ $viewer->render();
 ## monolog config
 How we initialized Monolog to write our log files. 
 ```
+<?php
 $logger = new \Monolog\Logger('app');
 
 $logger->pushProcessor(new \Monolog\Processor\UidProcessor());
