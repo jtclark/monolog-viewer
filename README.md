@@ -16,3 +16,13 @@ $viewer->authenticate();
 
 $viewer->render();
 ```
+
+## monolog config
+```
+$logger = new \Monolog\Logger('app');
+
+$logger->pushProcessor(new \Monolog\Processor\UidProcessor());
+$handler = new \Monolog\Handler\StreamHandler('sample.log', \Monolog\Logger::DEBUG);
+$handler->setFormatter(new Monolog\Formatter\JsonFormatter());
+$logger->pushHandler($handler);
+```
