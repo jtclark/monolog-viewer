@@ -1,0 +1,20 @@
+{
+    "name": "jclark/monolog-viewer",
+    "description": "Very simple viewer of monolog JSON formatted log files",
+    "require": {
+        "twig/extensions": "^1.2@dev"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "John Clark",
+            "email": "john@jtclark.ca"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Jtclark\\": "src"
+        }
+    }
+}
