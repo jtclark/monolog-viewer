@@ -1,7 +1,8 @@
 {
-    "name": "jclark/monolog-viewer",
+    "name": "jtclark/monolog-viewer",
     "description": "Very simple viewer of monolog JSON formatted log files",
     "require": {
+        "twig/twig": "1.*",
         "twig/extensions": "^1.2@dev"
     },
     "license": "MIT",
