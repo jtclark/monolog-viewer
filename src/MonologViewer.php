@@ -36,7 +36,7 @@ class MonologViewer {
         }
     }
 
-    public function render()
+    public function render($lines = 100)
     {
         $logPath = $this->settings['path'];
 
@@ -88,7 +88,7 @@ class MonologViewer {
         }));
 
 
-        $lines = array_reverse(explode("\n", $this->tail($logPath)));
+        $lines = array_reverse(explode("\n", $this->tail($logPath, $lines)));
         foreach ($lines as $line) {
             $json = json_decode($line, true);
             if ($json === null) {
