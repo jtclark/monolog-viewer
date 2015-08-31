@@ -36,6 +36,10 @@ class MonologViewer {
         }
     }
 
+    /**
+     * Number of lines to return, if null, entire file will be read
+     * @param int|null $lines
+     */
     public function render($lines = 100)
     {
         $logPath = $this->settings['path'];
@@ -87,8 +91,11 @@ class MonologViewer {
             return '';
         }));
 
-
-        $lines = array_reverse(explode("\n", $this->tail($logPath, $lines)));
+        if ($lines === null) {
+            $lines = array_reverse(explode("\n", file_get_contents($logPath)));
+        } else {
+            $lines = array_reverse(explode("\n", $this->tail($logPath, $lines)));
+        }
         foreach ($lines as $line) {
             $json = json_decode($line, true);
             if ($json === null) {
