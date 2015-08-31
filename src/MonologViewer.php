@@ -40,7 +40,7 @@ class MonologViewer {
      * Number of lines to return, if null, entire file will be read
      * @param int|null $lines
      */
-    public function render($lines = 100)
+    public function render($lines = 100, $logLevelFilter = null)
     {
         $logPath = $this->settings['path'];
 
@@ -97,12 +97,20 @@ class MonologViewer {
             $lines = array_reverse(explode("\n", $this->tail($logPath, $lines)));
         }
         foreach ($lines as $line) {
+            if (!$line) {
+                continue;
+            }
             $json = json_decode($line, true);
             if ($json === null) {
                 die('Could not read log line: ' . $line);
             }
+
+            if (strtolower($logLevelFilter) && strtolower($json['level_name']) != strtolower($logLevelFilter)) {
+                continue;
+            }
             $template = !empty($this->settings['template']) ? $this->settings['template'] : 'log.twig';
             echo $twig->render($template, $json);
+
         }
     }
 

@@ -4,10 +4,10 @@ require (__DIR__ . '/vendor/autoload.php');
 $viewer = new \Jtclark\MonologViewer([
     'user' => 'user',
     'pass' => 'abc123',
-    'path' => 'sample.log',
-    'template' => ''
+    'path' => __DIR__ . '/sample.log',
+    //'template' => 'log.twig'
 ]);
 
 $viewer->authenticate();
 
-$viewer->render();
+$viewer->render(null, $_GET['filter']);
