@@ -10,4 +10,11 @@ $viewer = new \Jtclark\MonologViewer([
 
 $viewer->authenticate();
 
-$viewer->render(null, $_GET['filter']);
+// return all log entries
+$viewer->render(null);
+
+// render last 100 log entries
+$viewer->render(100);
+
+// render last 100 error log entries
+$viewer->render(100, 'error');
