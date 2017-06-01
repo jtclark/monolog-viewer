@@ -12,7 +12,6 @@
             "email": "john@jtclark.ca"
         }
     ],
-    "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
             "Jtclark\\": "src"
