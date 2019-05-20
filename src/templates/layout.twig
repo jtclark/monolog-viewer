@@ -1,21 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <title>Monolog Viewer</title>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-    <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-</head>
-<body>
-{% block body %}{% endblock %}
-<script>
-//    setTimeout(function(){
-//        location.reload();
-//    }, 60000);
-</script>
-</body>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div class="container">
+      <form action="">
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="supportCode">Support Code:</label>
+            <input type="text" class="form-control" name="sc" id="supportCode" value="{{ search.sc }}"/>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="severity">Severity</label>
+            <select name="filter" class="form-control" id="severity">
+              <option value="" {{ search.filter == '' ? 'selected' : '' }}>All</option>
+              <option value="critical" {{ search.filter == 'critical' ? 'selected' : '' }}>Critical</option>
+              <option value="error" {{ search.filter == 'error' ? 'selected' : '' }}>Error</option>
+              <option value="warning" {{ search.filter == 'warning' ? 'selected' : '' }}>Warning</option>
+              <option value="debug" {{ search.filter == 'debug' ? 'selected' : '' }}>Debug</option>
+              <option value="info" {{ search.filter == 'info' ? 'selected' : '' }}>Info</option>
+            </select>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="search">Search:</label>
+            <input type="text" class="form-control" name="q" id="search" value="{{ search.q }}"/>
+          </div>
+          <input type="submit" class="sr-only"/>
+        </div>
+      </form>
+    </div>
+    {% block body %}{% endblock %}
+    <script>
+     setTimeout(function(){
+       location.reload();
+     }, 60000);
+     $('#severity').on('change', function () {
+       $('form').submit();
+     });
+    </script>
+  </body>
 </html>
