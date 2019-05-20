@@ -1,6 +1,11 @@
 <?php
 namespace Jtclark;
 use Exception;
+use Twig\Environment;
+use Twig\Extension\DebugExtension;
+use Twig\Extensions\DateExtension;
+use Twig\Loader\FilesystemLoader;
+use Twig\TwigFilter;
 
 class MonologViewer
 {
@@ -65,15 +70,15 @@ class MonologViewer
             die('Log file does not exist');
         }
 
-        $loader = new \Twig_Loader_Filesystem(__DIR__ . '/templates');
-        $twig = new \Twig_Environment($loader, [
+        $loader = new FilesystemLoader(__DIR__ . '/templates');
+        $twig = new Environment($loader, [
             'debug' => true,
         ]);
 
-        $twig->addExtension(new \Twig_Extension_Debug());
-        $twig->addExtension(new \Twig_Extensions_Extension_Date());
+        $twig->addExtension(new DebugExtension());
+        $twig->addExtension(new DateExtension());
 
-        $twig->addFilter(new \Twig_SimpleFilter('alertIconClass', function ($string) {
+        $twig->addFilter(new TwigFilter('alertIconClass', function ($string) {
             switch ($string) {
                 case 'ERROR':
                 case 'CRITICAL':
@@ -90,7 +95,7 @@ class MonologViewer
             return '';
         }));
 
-        $twig->addFilter(new \Twig_SimpleFilter('alertClass', function ($string) {
+        $twig->addFilter(new TwigFilter('alertClass', function ($string) {
             switch ($string) {
                 case 'ERROR':
                 case 'CRITICAL':
