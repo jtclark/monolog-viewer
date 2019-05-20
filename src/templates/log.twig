@@ -1,37 +1,35 @@
-{% extends "layout.twig" %}
+{% extends 'layout.twig' %}
 {% block body %}
-<div class="container">
+  <div class="container">
     <div class="row">
-        <div class="col-md-12">
-            <h4 class="alert {{ level_name|alertClass }}">
-                <i class="fa {{ level_name|alertIconClass }}"></i> {{ level_name }}:
-                {{ message|slice(0, 50) }}
-                <small>
-                    {{ (datetime.date ~ ' ' ~ datetime.timezone)|time_diff }}
-                    | {{ extra.uid }}
-                </small>
-            </h4>
+      <div class="col-md-12">
+        {% for log in logs %}
+          <h4 class="alert {{ log.level_name|alertClass }}">
+            <i class="fa {{ log.level_name|alertIconClass }}"></i> {{ log.level_name }}:
+            {{ log.message|slice(0, 50) }}
+            <small>
+              {{ (log.datetime.date ~ ' ' ~ log.datetime.timezone)|time_diff }}
+              | {{ log.extra.uid }}
+            </small>
+          </h4>
 
-            <dl class="dl-horizontal">
-                <dt>Support Code:</dt>
-                <dd><pre>{{ extra.uid }}</pre></dd>
+          <dl class="row">
+            <dt class="col-md-2">Support Code:</dt>
+            <dd class="col-md-10"><code>{{ log.extra.uid }}</code></dd>
+            <dt class="col-md-2">Date:</dt>
+            <dd class="col-md-10"><pre>{{ log.datetime.date }} {{ log.datetime.timezone ~ "\n" }}{{ (log.datetime.date ~ ' ' ~ log.datetime.timezone)|date('Y-m-d H:i:s.u T', 'America/Toronto') }}</pre></dd>
+            <dt class="col-md-2">Message:</dt>
+            <dd class="col-md-10"><pre>{{ log.message }}</pre></dd>
 
-                <dt>Date:</dt>
-                <dd><pre>{{ datetime.date }} {{ datetime.timezone ~ "\n" }}{{ (datetime.date ~ ' ' ~ datetime.timezone)|date('Y-m-d H:i:s.u T', 'America/Toronto') }}</pre></dd>
-
-                <dt>Message:</dt>
-                <dd><pre>{{ message }}</pre></dd>
-            </dl>
-
-            {% if context %}
-                <dl class="dl-horizontal">
-                    {% for key, value in context %}
-                        <dt>{{ key|capitalize }}:</dt>
-                        <dd><pre style="{{ key == 'trace' ? 'font-size:11px;' }}">{{ value }}</pre></dd>
-                    {% endfor %}
-                </dl>
+            {% if log.context %}
+              {% for key, value in log.context %}
+                <dt class="col-md-2">{{ key|capitalize }}:</dt>
+                <dd class="col-md-10"><pre style="{{ key == 'trace' ? 'font-size:11px;' }}">{{ value }}</pre></dd>
+              {% endfor %}
             {% endif %}
-        </div>
+          </dl>
+        {% endfor %}
+      </div>
     </div>
 </div>
 {% endblock %}
