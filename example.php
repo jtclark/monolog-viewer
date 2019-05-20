@@ -1,7 +1,9 @@
 <?php
+use Jtclark\MonologViewer;
+
 date_default_timezone_set('UTC');
-require (__DIR__ . '/vendor/autoload.php');
-$viewer = new \Jtclark\MonologViewer([
+require(__DIR__ . '/vendor/autoload.php');
+$viewer = new MonologViewer([
     'user' => 'user',
     'pass' => 'abc123',
     'path' => __DIR__ . '/sample.log',
@@ -10,8 +12,13 @@ $viewer = new \Jtclark\MonologViewer([
 
 $viewer->authenticate();
 
-// return all log entries
-$viewer->render(null);
+$viewer->render(
+    isset($_GET['lines']) ? $_GET['lines'] : 100,
+    isset($_GET['filter']) ? $_GET['filter'] : null,
+    isset($_GET['sc']) ? $_GET['sc'] : null,
+    isset($_GET['q']) ? $_GET['q'] : null
+);
+
 
 // render last 100 log entries
 //$viewer->render(100);
