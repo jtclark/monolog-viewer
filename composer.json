@@ -3,7 +3,8 @@
     "description": "Very simple viewer of monolog JSON formatted log files",
     "require": {
         "twig/twig": ">1.3",
-        "twig/extensions": ">1.2"
+        "twig/extensions": ">1.2",
+        "ext-json": "^1.6"
     },
     "license": "MIT",
     "authors": [
