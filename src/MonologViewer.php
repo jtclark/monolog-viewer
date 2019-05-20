@@ -1,24 +1,29 @@
 <?php
 namespace Jtclark;
+use Exception;
 
-class MonologViewer {
+class MonologViewer
+{
     protected $settings = [];
 
     public function __construct(array $settings)
     {
         if (empty($settings['user'])) {
-            throw new \Exception('user must be set');
+            throw new Exception('user must be set');
         }
         if (empty($settings['pass'])) {
-            throw new \Exception('password must be set');
+            throw new Exception('password must be set');
         }
         if (empty($settings['path'])) {
-            throw new \Exception('Log path must be set');
+            throw new Exception('Log path must be set');
         }
         $this->settings = $settings;
     }
 
 
+    /**
+     * Very basic HTTP authentication
+     */
     public function authenticate()
     {
         if (!isset($_SERVER['PHP_AUTH_USER'])) {
@@ -28,7 +33,8 @@ class MonologViewer {
             exit;
         }
 
-        if ($_SERVER['PHP_AUTH_USER'] != $this->settings['user'] || $_SERVER['PHP_AUTH_PW'] != $this->settings['pass']) {
+        if ($_SERVER['PHP_AUTH_USER'] != $this->settings['user'] ||
+            $_SERVER['PHP_AUTH_PW'] != $this->settings['pass']) {
             header('WWW-Authenticate: Basic realm="My Realm"');
             header('HTTP/1.0 401 Unauthorized');
             echo 'Invalid credentials';
@@ -37,12 +43,22 @@ class MonologViewer {
     }
 
     /**
-     * Number of lines to return, if null, entire file will be read
-     * @param int|null $lines
+     * Filters the logs and renders them
+     *
+     * @param int $lines Number of lines to return, if null, entire file will be read
+     * @param string $logLevelFilter log level type to filter, debug, critical, error, warning, info
+     * @param string $supportCode
+     * @param string $search
+     * @throws Exception
+     * @return void
      */
     public function render($lines = 100, $logLevelFilter = null, $supportCode = null, $search = null)
     {
         $logPath = $this->settings['path'];
+
+        if ($logLevelFilter === 'all') {
+            $logLevelFilter = null;
+        }
 
         // make sure log path actually exists
         if (!file_exists($logPath)) {
@@ -96,6 +112,7 @@ class MonologViewer {
         } else {
             $lines = array_reverse(explode("\n", $this->tail($logPath, $lines)));
         }
+        $logs = [];
         foreach ($lines as $line) {
             if (!$line) {
                 continue;
@@ -114,10 +131,20 @@ class MonologViewer {
             if ($search && strpos($line, $search) === false) {
                 continue;
             }
-            $template = !empty($this->settings['template']) ? $this->settings['template'] : 'log.twig';
-            echo $twig->render($template, $json);
+
+            $logs[] = $json;
 
         }
+        //var_export($logs);
+        $template = !empty($this->settings['template']) ? $this->settings['template'] : 'log.twig';
+        echo $twig->render($template, [
+            'logs' => $logs,
+            'search' => [
+                'sc' => $supportCode,
+                'filter' => $logLevelFilter,
+                'q' => $search
+            ]
+        ]);
     }
 
     /**
