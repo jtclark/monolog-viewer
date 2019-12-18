@@ -4,7 +4,7 @@
     "require": {
         "twig/twig": "^2.10||^3.0",
         "twig/extensions": "^1.5",
-        "ext-json": "^1.5"
+        "ext-json": "*"
     },
     "license": "MIT",
     "authors": [
