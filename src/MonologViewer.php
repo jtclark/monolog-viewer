@@ -76,7 +76,6 @@ class MonologViewer
         ]);
 
         $twig->addExtension(new DebugExtension());
-        $twig->addExtension(new CoreExtension());
 
         $twig->addFilter(new TwigFilter('alertIconClass', function ($string) {
             switch ($string) {
