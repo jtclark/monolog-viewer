@@ -2,8 +2,8 @@
 namespace Jtclark;
 use Exception;
 use Twig\Environment;
+use Twig\Extension\CoreExtension;
 use Twig\Extension\DebugExtension;
-use Twig\Extensions\DateExtension;
 use Twig\Loader\FilesystemLoader;
 use Twig\TwigFilter;
 
@@ -76,7 +76,7 @@ class MonologViewer
         ]);
 
         $twig->addExtension(new DebugExtension());
-        $twig->addExtension(new DateExtension());
+        $twig->addExtension(new CoreExtension());
 
         $twig->addFilter(new TwigFilter('alertIconClass', function ($string) {
             switch ($string) {
