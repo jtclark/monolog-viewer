@@ -8,7 +8,7 @@
             <i class="fa {{ log.level_name|alertIconClass }}"></i> {{ log.level_name }}:
             {{ log.message|slice(0, 50) }}
             <small>
-              {{ (log.datetime.date ~ ' ' ~ log.datetime.timezone)|time_diff }}
+              {{ (log.datetime.date ~ ' ' ~ log.datetime.timezone)|ago }}
               | {{ log.extra.uid }}
             </small>
           </h4>
@@ -17,7 +17,9 @@
             <dt class="col-md-2">Support Code:</dt>
             <dd class="col-md-10"><code>{{ log.extra.uid }}</code></dd>
             <dt class="col-md-2">Date:</dt>
-            <dd class="col-md-10"><pre>{{ log.datetime.date }} {{ log.datetime.timezone ~ "\n" }}{{ (log.datetime.date ~ ' ' ~ log.datetime.timezone)|date('Y-m-d H:i:s.u T', 'America/Toronto') }}</pre></dd>
+            <dd class="col-md-10">
+              <pre>{{ log.datetime.date|ago ~ "\n" }}{{ log.datetime.date }} {{ log.datetime.timezone ~ "\n" }}{{ (log.datetime.date ~ ' ' ~ log.datetime.timezone)|date('Y-m-d H:i:s.u T', 'America/Toronto') }}</pre>
+            </dd>
             <dt class="col-md-2">Message:</dt>
             <dd class="col-md-10"><pre>{{ log.message }}</pre></dd>
 

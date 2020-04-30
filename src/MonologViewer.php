@@ -6,6 +6,7 @@ use Twig\Extension\CoreExtension;
 use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader;
 use Twig\TwigFilter;
+use Westsworld\TimeAgo;
 
 class MonologViewer
 {
@@ -75,7 +76,10 @@ class MonologViewer
             'debug' => true,
         ]);
 
-        $twig->addExtension(new DebugExtension());
+        $twig->addFilter(new TwigFilter('ago', function ($dateTime) {
+            $timeAgo = new TimeAgo();
+            return $timeAgo->inWordsFromStrings($dateTime);
+        }));
 
         $twig->addFilter(new TwigFilter('alertIconClass', function ($string) {
             switch ($string) {
