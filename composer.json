@@ -2,7 +2,7 @@
     "name": "jtclark/monolog-viewer",
     "description": "Very simple viewer of monolog JSON formatted log files",
     "require": {
-        "php": "^7.2",
+        "php": "^7.2||^8.0",
         "twig/twig": "^2.0||^3.0",
         "ext-json": "*",
         "jimmiw/php-time-ago": "^3.1"
